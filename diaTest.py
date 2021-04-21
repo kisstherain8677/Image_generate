@@ -5,7 +5,8 @@ inputDialog
 __author__ = 'Tony Zhu'
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QInputDialog, \
-    QGridLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QHBoxLayout,QDialog
+    QGridLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QHBoxLayout, QDialog
+
 
 
 class InputDialog(QDialog):
@@ -110,7 +111,7 @@ class InputDialog(QDialog):
     def editOne(self, label):
         name, ok = QInputDialog.getText(self, "属性输入", "输入该属性描述:",
                                         QLineEdit.Normal, label.text())
-        if ok and (len(name) != 0):
+        if ok:
             label.setText(name)
 
     def editCaption(self, label):
@@ -121,7 +122,26 @@ class InputDialog(QDialog):
 
     # 根据属性生成caption
     def generateCaption(self):
-        self.captionLabel.setText("generated caption")
+        # 获取各个属性
+        bodyColor = self.bodyColorLabel.text()
+        crownColor = self.crownColorLabel.text()
+        bellyColor = self.bellyColorLabel.text()
+        wingsColor = self.wingsColorLabel.text()
+        beakSize = self.beakSizeLabel.text()
+        attributeList=['crown','belly','wings','beak']
+        valueList=[crownColor,bellyColor,wingsColor,beakSize]
+        attDict=dict(zip(attributeList,valueList))
+        caption="this bird is %s and with" % bodyColor
+        keyindex=0
+        for key in iter(attDict.keys()):
+            if(attDict[key]!=''):
+
+                cap=" %s %s,"%(attDict[key],key)
+                caption=caption+cap
+
+        self.captionLabel.setText(caption)
+
+
 
     # 写入生成的句子,并生成图片
     def submitCaption(self):
