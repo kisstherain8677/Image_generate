@@ -1,0 +1,33 @@
+CONFIG_NAME: '3stages'
+
+DATASET_NAME: 'birds'
+EMBEDDING_TYPE: 'cnn-rnn'
+DATA_DIR: 'StackGAN/data/birds'
+CAPTIONS_PATH: 'StackGAN/data/birds/example_captions.txt'
+TEXT_ENCODER_PATH: 'StackGAN/data/birds/lm_sje_nc4_cub_hybrid_gru18_a1_c512_0.00070_1_10_trainvalids.txt_iter30000.t7'
+GPU_ID: '3'
+WORKERS: 1  # 4
+
+B_VALIDATION: False  # True  # False
+
+TREE:
+    BRANCH_NUM: 3
+
+
+TEST:
+    B_EXAMPLE: False
+
+
+TRAIN:
+    FLAG: False
+    NET_G: 'StackGAN/models/birds_3stages/netG_210000.pth'
+    BATCH_SIZE: 1
+
+
+GAN:
+    EMBEDDING_DIM: 128
+    DF_DIM: 64
+    GF_DIM: 64
+    Z_DIM: 100
+    R_NUM: 2
+    B_CONDITION: True

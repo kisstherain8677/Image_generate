@@ -1,0 +1,31 @@
+CONFIG_NAME: '3stages'
+
+DATASET_NAME: 'flowers'
+EMBEDDING_TYPE: 'cnn-rnn'
+DATA_DIR: 'StackGAN/data/flowers'
+GPU_ID: '3'
+WORKERS: 1  # 4
+
+B_VALIDATION: True
+
+TREE:
+    BRANCH_NUM: 3
+
+
+TEST:
+    B_EXAMPLE: False
+
+
+TRAIN:
+    FLAG: False
+    NET_G: 'StackGAN/models/flowers_3stages/netG_2000.pth'
+    BATCH_SIZE: 24
+
+
+GAN:
+    EMBEDDING_DIM: 128
+    DF_DIM: 64
+    GF_DIM: 64
+    Z_DIM: 100
+    R_NUM: 2
+    B_CONDITION: True
