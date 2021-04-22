@@ -8,14 +8,13 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QInputDialog, \
     QGridLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QHBoxLayout, QDialog
 
 
-
-class InputDialog(QDialog):
+class BirdDialog(QDialog):
     def __init__(self):
-        super(InputDialog, self).__init__()
+        super(BirdDialog, self).__init__()
         self.initUi()
 
     def initUi(self):
-        self.setWindowTitle("输入描述信息")
+        self.setWindowTitle("输入鸟类信息")
         self.setGeometry(400, 400, 300, 260)
 
         example_sentence = "请输入描述的句子，描述鸟的身体颜色、头冠颜色、腹部颜色、翅膀颜色、喙的长度等，可参考以下示例：\n" + \
@@ -128,26 +127,24 @@ class InputDialog(QDialog):
         bellyColor = self.bellyColorLabel.text()
         wingsColor = self.wingsColorLabel.text()
         beakSize = self.beakSizeLabel.text()
-        attributeList=['crown','belly','wings','beak']
-        valueList=[crownColor,bellyColor,wingsColor,beakSize]
-        attDict=dict(zip(attributeList,valueList))
-        caption="this bird is %s and with" % bodyColor
-        keyindex=0
+        attributeList = ['crown', 'belly', 'wings', 'beak']
+        valueList = [crownColor, bellyColor, wingsColor, beakSize]
+        attDict = dict(zip(attributeList, valueList))
+        caption = "this bird is %s and with" % bodyColor
+        keyindex = 0
         for key in iter(attDict.keys()):
-            if(attDict[key]!=''):
-
-                cap=" %s %s,"%(attDict[key],key)
-                caption=caption+cap
+            if (attDict[key] != ''):
+                cap = " %s %s," % (attDict[key], key)
+                caption = caption + cap
 
         self.captionLabel.setText(caption)
-
-
 
     # 写入生成的句子,并生成图片
     def submitCaption(self):
         caption = self.captionLabel.text()
         with open("custom.txt", "w") as f:
             f.write("birds" + '\n' + caption)
+
 
 
 if __name__ == "__main__":

@@ -12,9 +12,11 @@ from Canvas.canvas import Canvas
 import cv2
 
 from grab_cut import Grab_cut
-from generateDia import GenerateDia
+from choiceDia import ChoiceDia
 from zoomWidget import ZoomWidget
-from diaTest import InputDialog
+from birdDialog import BirdDialog
+
+from generator import Generator
 
 __appname__ = 'grab_cut'
 
@@ -354,32 +356,12 @@ class MainWindow(QMainWindow, WindowMixin):
 
     # 生成图片
     def generate(self):
-        # 用命令行执行GAN操作
-        type = 'none'  # flower/bird/actor
-        # dia = GenerateDia()
-        dia = InputDialog()
-        dia.exec()
-        lines = []
-        with open("custom.txt", "r") as f:
-            for line in f.readlines():
-                line = line.strip('\n')  # 去掉列表中每一个元素的换行符
-                lines.append(line)
+        choiceDia=ChoiceDia()
+        choiceDia.show()
+        choiceDia.hide()
+        gen=Generator(choiceDia.type)
+        gen.generate()
 
-        if lines[0] == 'birds':
-            type = 'birds'
-            with open("StackGAN/data/birds/example_captions.txt", "w") as f:
-                f.write(lines[1])  # 覆盖原文件
-        elif lines[0] == 'flowers':
-            type = 'flowers'
-            with open("StackGAN/data/flowers/example_captions.txt", "w") as f:
-                f.write(lines[1])  # 覆盖原文件
-
-        else:
-            print("unknown type!")
-            return
-
-        path = 'StackGAN/code'
-        os.system('python ' + path + '/main.py --cfg ' + path + '/cfg/eval_' + type + '.yml --gpu 0')
 
     # 提取前景操作
     def grabcutMatting(self):
