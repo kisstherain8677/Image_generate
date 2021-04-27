@@ -20,7 +20,7 @@
 
 三、基于CycleGAN的图像风格迁移  
 使用方法：  
-0、从 https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix 下载pretrainmodel monet_style等四个画家到CycleGAN/checkpoints
+0、从 https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix 下载pretrainmodel monet_style等四个画家到CycleGAN/checkpoints。  
 1、点击导入图片，选择图片。  
 2、点击风格转换，选择你要转换的风格。  
 3、等待转换风格后的图片出现在output栏。  
