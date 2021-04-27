@@ -10,13 +10,16 @@ from toolBar import ToolBar
 from Canvas.canvas import Canvas
 
 import cv2
+import numpy as np
 
 from grab_cut import Grab_cut
-from choiceDia import ChoiceDia
+from choiceDiaGen import ChoiceDiaGen
+from choiceDiaStyle import ChoiceDiaStyle
 from zoomWidget import ZoomWidget
 from birdDialog import BirdDialog
 
 from generator import Generator
+from styleChanger import StyleChanger
 
 __appname__ = 'grab_cut'
 
@@ -111,7 +114,7 @@ class MainWindow(QMainWindow, WindowMixin):
         matResultShow.setLayout(listLayout)
 
         # 建一个dockwidget放图片label
-        self.resultdock = QDockWidget('分割结果', self)
+        self.resultdock = QDockWidget('output', self)
         self.resultdock.setObjectName('result')
 
         self.resultdock.setWidget(matResultShow)
@@ -171,8 +174,11 @@ class MainWindow(QMainWindow, WindowMixin):
         matting = action('迭代一次', self.grabcutMatting,
                          'e', '用当前标记迭代一次获取前景算法')
 
-        # 用预训练网络生成图片
+        # 用预训练模型生成图片
         generate = action('生成图片', self.generate, None, '输入文字，生成图片素材')
+
+        # 用预训练模型进行风格迁移
+        style = action('风格转换', self.styleChange, None, '选择一个风格，进行图像风格转换')
         # 字典，对应一个放缩比
         self.scalers = {
             self.FIT_WINDOW: self.scaleFitWindow,
@@ -185,7 +191,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.actions = struct(save=save, open_file=open_file,
                               open_dir=open_dir, change_save_dir=change_save_dir,
                               # open_next_img=open_next_img, open_pre_img=open_pre_img,
-                              create=create, mark=mark, matting=matting, generate=generate)
+                              create=create, mark=mark, matting=matting, generate=generate, style=style)
 
         # Auto saving: enable auto saving if pressing next
         # self.autoSaving = QAction('Auto Saving', self)
@@ -197,7 +203,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.actions.all = (save, open_file, open_dir,
                             change_save_dir, create,
                             # open_pre_img, open_next_img,
-                            mark, matting, generate)
+                            mark, matting, generate,style)
         addActions(self.tools, self.actions.all)
 
         # set status
@@ -356,12 +362,32 @@ class MainWindow(QMainWindow, WindowMixin):
 
     # 生成图片
     def generate(self):
-        choiceDia=ChoiceDia()
+        # 种类选择对话框
+        choiceDia = ChoiceDiaGen()
         choiceDia.show()
         choiceDia.hide()
-        gen=Generator(choiceDia.type)
+        # 由Generator类控制生成对话框
+        gen = Generator(choiceDia.type)
         gen.generate()
 
+    def styleChange(self):
+        # 风格选择对话框
+        choiceDia = ChoiceDiaStyle()
+        choiceDia.show()
+        choiceDia.hide()
+        print(choiceDia.type)
+        changer=StyleChanger(choiceDia.type,self.filePath)
+        changer.changeStyle()
+        #self.loadFile("CycleGAN/targetImg/latest.png")
+        result=cv2.imread("CycleGAN/targetImg/latest.png")
+        #转换为四通道
+        b_channel, g_channel, r_channel = cv2.split(result)
+        alpha_channel = np.ones(b_channel.shape, dtype=b_channel.dtype) * 255
+        result_BGAR = cv2.merge((b_channel, g_channel, r_channel, alpha_channel))
+        # result[np.all(result==[0,0,0,255],axis=2)]=[0,0,0,0]
+        result_BGAR[np.all(result_BGAR == [0, 0, 0, 255], axis=2)] = [0, 0, 0, 0]
+        self.showResultImg(result_BGAR)
+        self.image_out_np=result_BGAR
 
     # 提取前景操作
     def grabcutMatting(self):

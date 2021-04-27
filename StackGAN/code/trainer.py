@@ -967,11 +967,12 @@ class condGANTrainer(object):
             netG.eval()
             #embedding is [1,1024]
             fake_imgs, _, _ = netG(noise,embedding)
-
+            print(fake_imgs[-])
             img = fake_imgs[-1][0].add(1).div(2).mul(255).clamp(0, 255).byte()
             ndarr = img.permute(1, 2, 0).data.cpu().numpy()
             im = Image.fromarray(ndarr)
             im.show()
+            im.save('output/birdtest.png')
             # plt.imshow(im)
             # plt.show()
 
