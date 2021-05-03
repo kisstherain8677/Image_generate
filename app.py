@@ -114,7 +114,7 @@ class MainWindow(QMainWindow, WindowMixin):
         matResultShow.setLayout(listLayout)
 
         # 建一个dockwidget放图片label
-        self.resultdock = QDockWidget('output', self)
+        self.resultdock = QDockWidget('输出结果', self)
         self.resultdock.setObjectName('result')
 
         self.resultdock.setWidget(matResultShow)
@@ -167,7 +167,7 @@ class MainWindow(QMainWindow, WindowMixin):
         #                        'Ctrl+N', 'Open next image')
         # open_pre_img = action('&Previous Image', self.openPreImg,
         #                        'Ctrl+M', 'Open previous image')
-        save = action('保存', self.saveFile, 'Crl+S', '保存输出结果图')
+        save = action('保存结果', self.saveFile, 'Crl+S', '保存输出结果图')
         create = action('指定区域', self.createShape,
                         'w', '框选ROI')
         mark = action('标记微调', self.markDown, None, '左键白色，标记前景；右键黑色，标记后景')
@@ -200,10 +200,10 @@ class MainWindow(QMainWindow, WindowMixin):
 
         # set toolbar
         self.tools = self.toolbar('Tools')
-        self.actions.all = (save, open_file, open_dir,
+        self.actions.all = (open_file, open_dir,
                             change_save_dir, create,
                             # open_pre_img, open_next_img,
-                            mark, matting, generate,style)
+                            mark, matting, generate, style, save)
         addActions(self.tools, self.actions.all)
 
         # set status
@@ -370,24 +370,32 @@ class MainWindow(QMainWindow, WindowMixin):
         gen = Generator(choiceDia.type)
         gen.generate()
 
+        # 将生成的图片取出来显示在主页
+        self.loadFile("StackGAN/resultImg/latest.png")
+
     def styleChange(self):
         # 风格选择对话框
         choiceDia = ChoiceDiaStyle()
         choiceDia.show()
         choiceDia.hide()
         print(choiceDia.type)
-        changer=StyleChanger(choiceDia.type,self.filePath)
+        changer = StyleChanger(choiceDia.type, self.filePath)
         changer.changeStyle()
-        #self.loadFile("CycleGAN/targetImg/latest.png")
-        result=cv2.imread("CycleGAN/targetImg/latest.png")
-        #转换为四通道
-        b_channel, g_channel, r_channel = cv2.split(result)
+        # self.loadFile("CycleGAN/targetImg/latest.png")
+        result = cv2.imread("CycleGAN/targetImg/latest.png")
+        # 转换为四通道
+        result = self.addAchannel(result)
+        self.showResultImg(result)
+        self.image_out_np = result
+
+    # 接收opencv读入的格式
+    def addAchannel(self, x):
+        b_channel, g_channel, r_channel = cv2.split(x)
         alpha_channel = np.ones(b_channel.shape, dtype=b_channel.dtype) * 255
         result_BGAR = cv2.merge((b_channel, g_channel, r_channel, alpha_channel))
         # result[np.all(result==[0,0,0,255],axis=2)]=[0,0,0,0]
         result_BGAR[np.all(result_BGAR == [0, 0, 0, 255], axis=2)] = [0, 0, 0, 0]
-        self.showResultImg(result_BGAR)
-        self.image_out_np=result_BGAR
+        return result_BGAR
 
     # 提取前景操作
     def grabcutMatting(self):

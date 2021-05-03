@@ -26,7 +26,7 @@ class ChoiceDiaGen(QWidget):
 
     def getChoice(self):
         items = ("birds", "flowers")
-        item, okPressed = QInputDialog.getItem(self, "Get item", "object type:", items, 0, False)
+        item, okPressed = QInputDialog.getItem(self, "choose type", "object type:", items, 0, False)
         if okPressed and item:
             self.type=item
             print(item)

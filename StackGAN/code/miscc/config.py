@@ -7,12 +7,12 @@ from easydict import EasyDict as edict
 
 __C = edict()
 cfg = __C
-__C.CAPTIONS_PATH = '../data/birds/captions.txt'
+__C.CAPTIONS_PATH = ''
 __C.B_VALIDATION = False
-__C.TEXT_ENCODER_PATH='../data/birds/lm_sje_nc4_cub_hybrid_gru18_a1_c512_0.00070_1_10_trainvalids.txt_iter30000.t7'
+__C.TEXT_ENCODER_PATH=''
 # Dataset name: flowers, birds
-__C.DATASET_NAME = 'birds'
-__C.EMBEDDING_TYPE = 'cnn-rnn'
+__C.DATASET_NAME = ''
+__C.EMBEDDING_TYPE = ''
 __C.CONFIG_NAME = ''
 __C.DATA_DIR = ''
 

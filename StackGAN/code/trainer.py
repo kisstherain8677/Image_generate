@@ -23,6 +23,7 @@ from miscc.utils import mkdir_p
 from tensorboardX import summary
 from tensorboardX import FileWriter
 
+import shutil
 # for train
 # from torch.utils.tensorboard import summary
 # from torch.utils.tensorboard import FileWriter
@@ -967,12 +968,20 @@ class condGANTrainer(object):
             netG.eval()
             #embedding is [1,1024]
             fake_imgs, _, _ = netG(noise,embedding)
-            print(fake_imgs[-])
+            # print(fake_imgs[-1])
             img = fake_imgs[-1][0].add(1).div(2).mul(255).clamp(0, 255).byte()
             ndarr = img.permute(1, 2, 0).data.cpu().numpy()
             im = Image.fromarray(ndarr)
-            im.show()
-            im.save('output/birdtest.png')
+            # im.show()
+
+            # save the latest genImg
+            target_dir = 'StackGAN/resultImg'
+            # 因为每次只处理一张,先清空文件夹
+            if not os.path.isdir(target_dir):
+                os.mkdir(target_dir)
+            shutil.rmtree(target_dir)
+            os.mkdir(target_dir)
+            im.save(target_dir+'/latest.png')
             # plt.imshow(im)
             # plt.show()
 

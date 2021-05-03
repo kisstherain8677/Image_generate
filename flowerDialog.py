@@ -17,46 +17,46 @@ class FlowerDialog(QDialog):
         self.setWindowTitle("输入花朵信息")
         self.setGeometry(400, 400, 300, 260)
 
-        example_sentence = "请输入描述的句子，描述鸟的身体颜色、头冠颜色、腹部颜色、翅膀颜色、喙的长度等，可参考以下示例：\n" + \
-                           "this bird is red with white and has a very short beak\n" + \
-                           "the bird has a yellow crown and a black eyering that is round"
+        example_sentence = "请输入描述的句子，描述花朵的花瓣颜色、形状大小、花蕊颜色等，可参考以下示例：\n" + \
+                           "this flower has large rounded pink petals with a yellow center."
         label0 = QLabel(example_sentence)
-        label1 = QLabel("身体颜色:")
-        label2 = QLabel("头冠颜色:")
-        label3 = QLabel("腹部颜色:")
-        label4 = QLabel("翅膀颜色:")
-        label5 = QLabel("喙长度:")
+        label1 = QLabel("花瓣颜色:")
+        label2 = QLabel("花瓣大小:")
+        label3 = QLabel("花蕊颜色:")
+        # label4 = QLabel("翅膀颜色:")
+        # label5 = QLabel("喙长度:")
         label6 = QLabel("编辑描述句子")
 
-        self.bodyColorLabel = QLabel("red with white")
-        self.bodyColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.crownColorLabel = QLabel("red")
-        self.crownColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.bellyColorLabel = QLabel("white")
-        self.bellyColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.wingsColorLabel = QLabel("yellow")
-        self.wingsColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.beakSizeLabel = QLabel("short")
-        self.beakSizeLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.captionLabel = QLabel("this bird is red with white and has a very short beak")
+        self.petalColorLabel = QLabel("red")
+        self.petalColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.petalSizeLabel = QLabel("small")
+        self.petalSizeLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.centerColorLabel = QLabel("white")
+        self.centerColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        # self.wingsColorLabel = QLabel("yellow")
+        # self.wingsColorLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        # self.beakSizeLabel = QLabel("short")
+        # self.beakSizeLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.captionLabel = QLabel("This flower has overlapping pink pointed petals "
+                                   "surrounding a ring of short yellow filaments")
         self.captionLabel.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         # buttons
-        bodyColorButton = QPushButton("edit")
-        crownColorButton = QPushButton("edit")
-        bellyColorButton = QPushButton("edit")
-        wingsColorButton = QPushButton("edit")
-        beakSizeButton = QPushButton("edit")
+        petalColorButton = QPushButton("edit")
+        petalSizeButton = QPushButton("edit")
+        centerColorButton = QPushButton("edit")
+        # wingsColorButton = QPushButton("edit")
+        # beakSizeButton = QPushButton("edit")
         showDisButton = QPushButton("edit")
         checkButton = QPushButton("save caption")
         cancelButton = QPushButton("generate image")
         generateCaptionButton = QPushButton("generate caption")
 
         # button click
-        bodyColorButton.clicked.connect(lambda: self.editOne(self.bodyColorLabel))
-        crownColorButton.clicked.connect(lambda: self.editOne(self.crownColorLabel))
-        bellyColorButton.clicked.connect(lambda: self.editOne(self.bellyColorLabel))
-        wingsColorButton.clicked.connect(lambda: self.editOne(self.wingsColorLabel))
-        beakSizeButton.clicked.connect(lambda: self.editOne(self.beakSizeLabel))
+        petalColorButton.clicked.connect(lambda: self.editOne(self.petalColorLabel))
+        petalSizeButton.clicked.connect(lambda: self.editOne(self.petalSizeLabel))
+        centerColorButton.clicked.connect(lambda: self.editOne(self.centerColorLabel))
+        # wingsColorButton.clicked.connect(lambda: self.editOne(self.wingsColorLabel))
+        # beakSizeButton.clicked.connect(lambda: self.editOne(self.beakSizeLabel))
         showDisButton.clicked.connect(lambda: self.editCaption(self.captionLabel))
         checkButton.clicked.connect(self.submitCaption)
         cancelButton.clicked.connect(self.close)
@@ -67,21 +67,21 @@ class FlowerDialog(QDialog):
 
         gridLayout = QGridLayout()
         gridLayout.addWidget(label1, 0, 0)
-        gridLayout.addWidget(self.bodyColorLabel, 0, 1)
-        gridLayout.addWidget(bodyColorButton, 0, 2)
+        gridLayout.addWidget(self.petalColorLabel, 0, 1)
+        gridLayout.addWidget(petalColorButton, 0, 2)
         gridLayout.addWidget(label2, 1, 0)
-        gridLayout.addWidget(self.crownColorLabel, 1, 1)
-        gridLayout.addWidget(crownColorButton, 1, 2)
+        gridLayout.addWidget(self.petalSizeLabel, 1, 1)
+        gridLayout.addWidget(petalSizeButton, 1, 2)
         gridLayout.addWidget(label3, 2, 0)
-        gridLayout.addWidget(self.bellyColorLabel, 2, 1)
-        gridLayout.addWidget(bellyColorButton, 2, 2)
-        gridLayout.addWidget(label4, 3, 0)
-        gridLayout.addWidget(self.wingsColorLabel, 3, 1)
-        gridLayout.addWidget(wingsColorButton, 3, 2)
-
-        gridLayout.addWidget(label5, 4, 0)
-        gridLayout.addWidget(self.beakSizeLabel, 4, 1)
-        gridLayout.addWidget(beakSizeButton, 4, 2)
+        gridLayout.addWidget(self.centerColorLabel, 2, 1)
+        gridLayout.addWidget(centerColorButton, 2, 2)
+        # gridLayout.addWidget(label4, 3, 0)
+        # gridLayout.addWidget(self.wingsColorLabel, 3, 1)
+        # gridLayout.addWidget(wingsColorButton, 3, 2)
+        #
+        # gridLayout.addWidget(label5, 4, 0)
+        # gridLayout.addWidget(self.beakSizeLabel, 4, 1)
+        # gridLayout.addWidget(beakSizeButton, 4, 2)
 
         gridLayout2 = QGridLayout()
         gridLayout2.addWidget(label6, 0, 0)
@@ -122,20 +122,20 @@ class FlowerDialog(QDialog):
     # 根据属性生成caption
     def generateCaption(self):
         # 获取各个属性
-        bodyColor = self.bodyColorLabel.text()
-        crownColor = self.crownColorLabel.text()
-        bellyColor = self.bellyColorLabel.text()
-        wingsColor = self.wingsColorLabel.text()
-        beakSize = self.beakSizeLabel.text()
-        attributeList = ['crown', 'belly', 'wings', 'beak']
-        valueList = [crownColor, bellyColor, wingsColor, beakSize]
+        petalColor = self.petalColorLabel.text()
+        petalSize = self.petalSizeLabel.text()
+        centerColor = self.centerColorLabel.text()
+        # wingsColor = self.wingsColorLabel.text()
+        # beakSize = self.beakSizeLabel.text()
+        attributeList = ['petalColor', 'petalSize', 'centerColor']
+        valueList = [petalColor, petalSize, centerColor]
         attDict = dict(zip(attributeList, valueList))
-        caption = "this bird is %s and with" % bodyColor
-        keyindex = 0
-        for key in iter(attDict.keys()):
-            if (attDict[key] != ''):
-                cap = " %s %s," % (attDict[key], key)
-                caption = caption + cap
+        caption="this flower has %s %s petals and a %s center" % (petalSize,petalColor,centerColor)
+        # keyindex = 0
+        # for key in iter(attDict.keys()):
+        #     if (attDict[key] != ''):
+        #         cap = " %s %s," % (attDict[key], key)
+        #         caption = caption + cap
 
         self.captionLabel.setText(caption)
 
@@ -143,7 +143,7 @@ class FlowerDialog(QDialog):
     def submitCaption(self):
         caption = self.captionLabel.text()
         with open("custom.txt", "w") as f:
-            f.write("birds" + '\n' + caption)
+            f.write("flowers" + '\n' + caption)
 
 
 
