@@ -23,7 +23,7 @@ class Generator(object):
                     lines.append(line)
             if len(lines) == 2:
                 if lines[0] == self.type:
-                    with open("StackGAN/data/birds/captions.txt", "w") as f:
+                    with open("StackGAN/data/birds/example_captions.txt", "w") as f:
                         f.write(lines[1])  # 覆盖原文件
                 else:
                     print('unknown error!')
@@ -42,7 +42,7 @@ class Generator(object):
                     lines.append(line)
             if len(lines) == 2:
                 if lines[0] == self.type:
-                    with open("StackGAN/data/flowers/captions.txt", "w") as f:
+                    with open("StackGAN/data/flowers/example_captions.txt", "w") as f:
                         f.write(lines[1])  # 覆盖原文件
                 else:
                     print('unknown error!')

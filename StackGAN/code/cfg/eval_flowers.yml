@@ -3,7 +3,7 @@ CONFIG_NAME: '3stages'
 DATASET_NAME: 'flowers'
 EMBEDDING_TYPE: 'cnn-rnn'
 DATA_DIR: 'StackGAN/data/flowers'
-CAPTIONS_PATH: 'StackGAN/data/flowers/captions.txt'
+CAPTIONS_PATH: 'StackGAN/data/flowers/example_captions.txt'
 TEXT_ENCODER_PATH: 'StackGAN/data/flowers/lm_sje_flowers_c10_hybrid_0.00070_1_10_trainvalids.txt_iter16400.t7'
 GPU_ID: '3'
 WORKERS: 1  # 4
