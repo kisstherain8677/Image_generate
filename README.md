@@ -1,5 +1,6 @@
 ﻿# image generate tool  
  本项目用于学习图像分割、图像生成、风格迁移等技术，将多种方法汇总，尽量做到易用。  
+ ![image](https://github.com/kisstherain8677/Image_generate/blob/main/sample.png)
  
 一、自动抠图，可选取感兴趣区域，一键扣取前景，可通过标记前景/后景进行迭代微调  
 基于https://github.com/zihuaweng/Interactive-image-segmentation-opencv-qt 修改。  
