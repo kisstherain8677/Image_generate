@@ -4,8 +4,9 @@ import os
 import sys
 
 class Generator(object):
-    def __init__(self, genType):
+    def __init__(self, genType,attrList):
         self.type = genType
+        self.attrList=attrList
 
     # 生成图片
     def generate(self):
@@ -14,7 +15,8 @@ class Generator(object):
         with open(r'custom.txt', 'a+') as test:
             test.truncate(0)
         if self.type == 'birds':
-            dia = BirdDialog()
+
+            dia = BirdDialog("birds",self.attrList)
             dia.exec()
             lines = []
             with open("custom.txt", "r") as f:
@@ -33,7 +35,7 @@ class Generator(object):
                 return
 
         elif self.type == 'flowers':
-            dia = FlowerDialog()
+            dia = BirdDialog("flowers",self.attrList)
             dia.exec()
             lines = []
             with open("custom.txt", "r") as f:

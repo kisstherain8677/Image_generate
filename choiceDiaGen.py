@@ -12,6 +12,7 @@ class ChoiceDiaGen(QWidget):
         self.width = 640
         self.height = 480
         self.type = 'none'  # bird/flower/..
+        self.attrList=[]
         self.initUI()
 
 
@@ -21,6 +22,7 @@ class ChoiceDiaGen(QWidget):
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         self.getChoice()
+        self.getAttr()
 
         #self.show()
 
@@ -30,6 +32,13 @@ class ChoiceDiaGen(QWidget):
         if okPressed and item:
             self.type=item
             print(item)
+
+    def getAttr(self):
+        attrs, ok = QInputDialog.getText(self, "指定属性", "指定3-5个属性,用逗号分隔:",
+                                        QLineEdit.Normal,"")
+        if ok and (len(attrs) != 0):
+            self.attrList=attrs.split(',')
+            print(self.attrList)
 
 
 if __name__ == '__main__':

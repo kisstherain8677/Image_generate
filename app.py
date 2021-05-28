@@ -367,7 +367,8 @@ class MainWindow(QMainWindow, WindowMixin):
         choiceDia.show()
         choiceDia.hide()
         # 由Generator类控制生成对话框
-        gen = Generator(choiceDia.type)
+        # 传入类型和属性列表
+        gen = Generator(choiceDia.type,choiceDia.attrList)
         gen.generate()
 
         # 将生成的图片取出来显示在主页
